@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Update;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Record {
   public static final String TABLE = "F4211";
-  public static final String VIEW = "F4211View";
+  public static final String VIEW = "F4211VIEW";
   public static final String NAME = "RECORD";
 
   //region reid Record ID
@@ -90,18 +90,37 @@ public class Record {
   }
   //endregion
 
-  public Record(Integer reid, Integer reimid, Integer reemid, Integer reqty) {
+  //region recreated Created Time
+  public static final String FIELD_RECREATED = "RECREATED";
+
+  @com.fasterxml.jackson.annotation.JsonFormat(timezone = "GMT+8", pattern = "yyyyMMddHHmmss")
+  protected java.util.Date recreated = null;
+
+  @javax.validation.constraints.NotNull(groups = {Insert.class, Update.class})
+  public java.util.Date getRecreated() {
+    return recreated;
+  }
+
+  public Record setRecreated(java.util.Date recreated) {
+    this.recreated = recreated;
+    return this;
+  }
+  //endregion
+
+  public Record(
+      Integer reid, Integer reimid, Integer reemid, Integer reqty, java.util.Date recreated) {
     if (reid != null) this.reid = reid;
     if (reimid != null) this.reimid = reimid;
     if (reemid != null) this.reemid = reemid;
     if (reqty != null) this.reqty = reqty;
+    if (recreated != null) this.recreated = recreated;
   }
 
   public Record() {
-    this(null, null, null, null);
+    this(null, null, null, null, null);
   }
 
   public Record clone() {
-    return new Record(reid, reimid, reemid, reqty);
+    return new Record(reid, reimid, reemid, reqty, recreated);
   }
 }

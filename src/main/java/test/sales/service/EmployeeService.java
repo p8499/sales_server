@@ -96,6 +96,16 @@ public class EmployeeService {
     return employeeMapper.maxEmamount(filter, defaultValue);
   }
 
+  @Transactional(value = "db01_transaction", readOnly = true)
+  public java.util.Date minEmbirthday(FilterExpr filter, java.util.Date defaultValue) {
+    return employeeMapper.minEmbirthday(filter, defaultValue);
+  }
+
+  @Transactional(value = "db01_transaction", readOnly = true)
+  public java.util.Date maxEmbirthday(FilterExpr filter, java.util.Date defaultValue) {
+    return employeeMapper.maxEmbirthday(filter, defaultValue);
+  }
+
   @Value(value = "#{employeeMapper}")
   protected EmployeeMapper employeeMapper;
 

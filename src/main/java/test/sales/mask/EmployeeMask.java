@@ -1,166 +1,170 @@
 package test.sales.mask;
 
-import java.io.IOException;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import test.sales.Mask;
-
-@JsonSerialize(using = EmployeeMask.Serializer.class)
-public class EmployeeMask implements Mask<EmployeeMask> {
-  protected boolean emid = false;
+public class EmployeeMask {
+  protected long value = 0b000000;
 
   public boolean getEmid() {
-    return emid;
+    return (value >> 5 & 1) == 1;
   }
 
   public EmployeeMask setEmid(boolean emid) {
-    this.emid = emid;
+    if (emid) value |= 0b100000;
+    else value &= 0b011111;
     return this;
   }
 
-  protected boolean emstatus = false;
-
   public boolean getEmstatus() {
-    return emstatus;
+    return (value >> 4 & 1) == 1;
   }
 
   public EmployeeMask setEmstatus(boolean emstatus) {
-    this.emstatus = emstatus;
+    if (emstatus) value |= 0b010000;
+    else value &= 0b101111;
     return this;
   }
 
-  protected boolean emgender = false;
-
   public boolean getEmgender() {
-    return emgender;
+    return (value >> 3 & 1) == 1;
   }
 
   public EmployeeMask setEmgender(boolean emgender) {
-    this.emgender = emgender;
+    if (emgender) value |= 0b001000;
+    else value &= 0b110111;
     return this;
   }
 
-  protected boolean emname = false;
-
   public boolean getEmname() {
-    return emname;
+    return (value >> 2 & 1) == 1;
   }
 
   public EmployeeMask setEmname(boolean emname) {
-    this.emname = emname;
+    if (emname) value |= 0b000100;
+    else value &= 0b111011;
     return this;
   }
 
-  protected boolean emamount = false;
-
   public boolean getEmamount() {
-    return emamount;
+    return (value >> 1 & 1) == 1;
   }
 
   public EmployeeMask setEmamount(boolean emamount) {
-    this.emamount = emamount;
+    if (emamount) value |= 0b000010;
+    else value &= 0b111101;
+    return this;
+  }
+
+  public boolean getEmbirthday() {
+    return (value >> 0 & 1) == 1;
+  }
+
+  public EmployeeMask setEmbirthday(boolean embirthday) {
+    if (embirthday) value |= 0b000001;
+    else value &= 0b111110;
     return this;
   }
 
   public EmployeeMask(
-      boolean emid, boolean emstatus, boolean emgender, boolean emname, boolean emamount) {
-    this.emid = emid;
-    this.emstatus = emstatus;
-    this.emgender = emgender;
-    this.emname = emname;
-    this.emamount = emamount;
+      boolean emid,
+      boolean emstatus,
+      boolean emgender,
+      boolean emname,
+      boolean emamount,
+      boolean embirthday) {
+    setEmid(emid);
+    setEmstatus(emstatus);
+    setEmgender(emgender);
+    setEmname(emname);
+    setEmamount(emamount);
+    setEmbirthday(embirthday);
+  }
+
+  public EmployeeMask(long v) {
+    value = v;
   }
 
   public EmployeeMask() {}
 
-  @Override
   public EmployeeMask all(boolean b) {
-    this.emid = b;
-    this.emstatus = b;
-    this.emgender = b;
-    this.emname = b;
-    this.emamount = b;
+    setEmid(b);
+    setEmstatus(b);
+    setEmgender(b);
+    setEmname(b);
+    setEmamount(b);
+    setEmbirthday(b);
     return this;
   }
 
-  @Override
   public EmployeeMask keys(boolean b) {
-    this.emid = b;
+    setEmid(b);
     return this;
   }
 
-  @Override
   public EmployeeMask attributes(boolean b) {
-    this.emstatus = b;
-    this.emgender = b;
-    this.emname = b;
+    setEmstatus(b);
+    setEmgender(b);
+    setEmname(b);
+    setEmbirthday(b);
     return this;
   }
 
-  @Override
   public EmployeeMask physicals(boolean b) {
-    this.emid = b;
-    this.emstatus = b;
-    this.emgender = b;
-    this.emname = b;
+    setEmid(b);
+    setEmstatus(b);
+    setEmgender(b);
+    setEmname(b);
+    setEmbirthday(b);
     return this;
   }
 
-  @Override
   public EmployeeMask virtuals(boolean b) {
-    this.emamount = b;
+    setEmamount(b);
     return this;
   }
 
-  @Override
   public boolean get(String p) {
-    if (p.equals("emid")) return emid;
-    else if (p.equals("emstatus")) return emstatus;
-    else if (p.equals("emgender")) return emgender;
-    else if (p.equals("emname")) return emname;
-    else if (p.equals("emamount")) return emamount;
+    switch (p) {
+      case "emid":
+        return getEmid();
+      case "emstatus":
+        return getEmstatus();
+      case "emgender":
+        return getEmgender();
+      case "emname":
+        return getEmname();
+      case "emamount":
+        return getEmamount();
+      case "embirthday":
+        return getEmbirthday();
+    }
     return false;
   }
 
-  @Override
   public EmployeeMask set(String p, boolean b) {
-    if (p.equals("emid")) this.emid = b;
-    else if (p.equals("emstatus")) this.emstatus = b;
-    else if (p.equals("emgender")) this.emgender = b;
-    else if (p.equals("emname")) this.emname = b;
-    else if (p.equals("emamount")) this.emamount = b;
+    switch (p) {
+      case "emid":
+        setEmid(b);
+        break;
+      case "emstatus":
+        setEmstatus(b);
+        break;
+      case "emgender":
+        setEmgender(b);
+        break;
+      case "emname":
+        setEmname(b);
+        break;
+      case "emamount":
+        setEmamount(b);
+        break;
+      case "embirthday":
+        setEmbirthday(b);
+        break;
+    }
     return this;
   }
 
-  public static class Serializer extends JsonSerializer<EmployeeMask> {
-    @Override
-    public void serialize(EmployeeMask value, JsonGenerator gen, SerializerProvider serializers)
-        throws IOException, JsonProcessingException {
-      gen.writeStartObject();
-      if (value.getEmid()) {
-        gen.writeFieldName("emid");
-        gen.writeBoolean(value.getEmid());
-      }
-      if (value.getEmstatus()) {
-        gen.writeFieldName("emstatus");
-        gen.writeBoolean(value.getEmstatus());
-      }
-      if (value.getEmgender()) {
-        gen.writeFieldName("emgender");
-        gen.writeBoolean(value.getEmgender());
-      }
-      if (value.getEmname()) {
-        gen.writeFieldName("emname");
-        gen.writeBoolean(value.getEmname());
-      }
-      if (value.getEmamount()) {
-        gen.writeFieldName("emamount");
-        gen.writeBoolean(value.getEmamount());
-      }
-      gen.writeEndObject();
-    }
+  @Override
+  public String toString() {
+    return String.valueOf(value);
   }
 }

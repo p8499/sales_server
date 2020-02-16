@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Update;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Employee {
   public static final String TABLE = "F0101";
-  public static final String VIEW = "F0101View";
+  public static final String VIEW = "F0101VIEW";
   public static final String NAME = "EMPLOYEE";
 
   //region emid Employee ID
@@ -103,19 +103,42 @@ public class Employee {
   }
   //endregion
 
-  public Employee(Integer emid, Integer emstatus, String emgender, String emname, Double emamount) {
+  //region embirthday Employee Birthday
+  public static final String FIELD_EMBIRTHDAY = "EMBIRTHDAY";
+
+  @com.fasterxml.jackson.annotation.JsonFormat(timezone = "GMT+8", pattern = "yyyyMMddHHmmss")
+  protected java.util.Date embirthday = null;
+
+  public java.util.Date getEmbirthday() {
+    return embirthday;
+  }
+
+  public Employee setEmbirthday(java.util.Date embirthday) {
+    this.embirthday = embirthday;
+    return this;
+  }
+  //endregion
+
+  public Employee(
+      Integer emid,
+      Integer emstatus,
+      String emgender,
+      String emname,
+      Double emamount,
+      java.util.Date embirthday) {
     if (emid != null) this.emid = emid;
     if (emstatus != null) this.emstatus = emstatus;
     if (emgender != null) this.emgender = emgender;
     if (emname != null) this.emname = emname;
     if (emamount != null) this.emamount = emamount;
+    if (embirthday != null) this.embirthday = embirthday;
   }
 
   public Employee() {
-    this(null, null, null, null, null);
+    this(null, null, null, null, null, null);
   }
 
   public Employee clone() {
-    return new Employee(emid, emstatus, emgender, emname, emamount);
+    return new Employee(emid, emstatus, emgender, emname, emamount, embirthday);
   }
 }

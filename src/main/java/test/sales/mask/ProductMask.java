@@ -1,144 +1,126 @@
 package test.sales.mask;
 
-import java.io.IOException;
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonSerializer;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import test.sales.Mask;
-
-@JsonSerialize(using = ProductMask.Serializer.class)
-public class ProductMask implements Mask<ProductMask> {
-  protected boolean imid = false;
+public class ProductMask {
+  protected long value = 0b0000;
 
   public boolean getImid() {
-    return imid;
+    return (value >> 3 & 1) == 1;
   }
 
   public ProductMask setImid(boolean imid) {
-    this.imid = imid;
+    if (imid) value |= 0b1000;
+    else value &= 0b0111;
     return this;
   }
 
-  protected boolean imname = false;
-
   public boolean getImname() {
-    return imname;
+    return (value >> 2 & 1) == 1;
   }
 
   public ProductMask setImname(boolean imname) {
-    this.imname = imname;
+    if (imname) value |= 0b0100;
+    else value &= 0b1011;
     return this;
   }
 
-  protected boolean imprice = false;
-
   public boolean getImprice() {
-    return imprice;
+    return (value >> 1 & 1) == 1;
   }
 
   public ProductMask setImprice(boolean imprice) {
-    this.imprice = imprice;
+    if (imprice) value |= 0b0010;
+    else value &= 0b1101;
     return this;
   }
 
-  protected boolean imamount = false;
-
   public boolean getImamount() {
-    return imamount;
+    return (value >> 0 & 1) == 1;
   }
 
   public ProductMask setImamount(boolean imamount) {
-    this.imamount = imamount;
+    if (imamount) value |= 0b0001;
+    else value &= 0b1110;
     return this;
   }
 
   public ProductMask(boolean imid, boolean imname, boolean imprice, boolean imamount) {
-    this.imid = imid;
-    this.imname = imname;
-    this.imprice = imprice;
-    this.imamount = imamount;
+    setImid(imid);
+    setImname(imname);
+    setImprice(imprice);
+    setImamount(imamount);
+  }
+
+  public ProductMask(long v) {
+    value = v;
   }
 
   public ProductMask() {}
 
-  @Override
   public ProductMask all(boolean b) {
-    this.imid = b;
-    this.imname = b;
-    this.imprice = b;
-    this.imamount = b;
+    setImid(b);
+    setImname(b);
+    setImprice(b);
+    setImamount(b);
     return this;
   }
 
-  @Override
   public ProductMask keys(boolean b) {
-    this.imid = b;
+    setImid(b);
     return this;
   }
 
-  @Override
   public ProductMask attributes(boolean b) {
-    this.imname = b;
-    this.imprice = b;
+    setImname(b);
+    setImprice(b);
     return this;
   }
 
-  @Override
   public ProductMask physicals(boolean b) {
-    this.imid = b;
-    this.imname = b;
-    this.imprice = b;
+    setImid(b);
+    setImname(b);
+    setImprice(b);
     return this;
   }
 
-  @Override
   public ProductMask virtuals(boolean b) {
-    this.imamount = b;
+    setImamount(b);
     return this;
   }
 
-  @Override
   public boolean get(String p) {
-    if (p.equals("imid")) return imid;
-    else if (p.equals("imname")) return imname;
-    else if (p.equals("imprice")) return imprice;
-    else if (p.equals("imamount")) return imamount;
+    switch (p) {
+      case "imid":
+        return getImid();
+      case "imname":
+        return getImname();
+      case "imprice":
+        return getImprice();
+      case "imamount":
+        return getImamount();
+    }
     return false;
   }
 
-  @Override
   public ProductMask set(String p, boolean b) {
-    if (p.equals("imid")) this.imid = b;
-    else if (p.equals("imname")) this.imname = b;
-    else if (p.equals("imprice")) this.imprice = b;
-    else if (p.equals("imamount")) this.imamount = b;
+    switch (p) {
+      case "imid":
+        setImid(b);
+        break;
+      case "imname":
+        setImname(b);
+        break;
+      case "imprice":
+        setImprice(b);
+        break;
+      case "imamount":
+        setImamount(b);
+        break;
+    }
     return this;
   }
 
-  public static class Serializer extends JsonSerializer<ProductMask> {
-    @Override
-    public void serialize(ProductMask value, JsonGenerator gen, SerializerProvider serializers)
-        throws IOException, JsonProcessingException {
-      gen.writeStartObject();
-      if (value.getImid()) {
-        gen.writeFieldName("imid");
-        gen.writeBoolean(value.getImid());
-      }
-      if (value.getImname()) {
-        gen.writeFieldName("imname");
-        gen.writeBoolean(value.getImname());
-      }
-      if (value.getImprice()) {
-        gen.writeFieldName("imprice");
-        gen.writeBoolean(value.getImprice());
-      }
-      if (value.getImamount()) {
-        gen.writeFieldName("imamount");
-        gen.writeBoolean(value.getImamount());
-      }
-      gen.writeEndObject();
-    }
+  @Override
+  public String toString() {
+    return String.valueOf(value);
   }
 }

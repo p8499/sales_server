@@ -106,6 +106,16 @@ public class RecordService {
     return recordMapper.maxReqty(filter, defaultValue);
   }
 
+  @Transactional(value = "db01_transaction", readOnly = true)
+  public java.util.Date minRecreated(FilterExpr filter, java.util.Date defaultValue) {
+    return recordMapper.minRecreated(filter, defaultValue);
+  }
+
+  @Transactional(value = "db01_transaction", readOnly = true)
+  public java.util.Date maxRecreated(FilterExpr filter, java.util.Date defaultValue) {
+    return recordMapper.maxRecreated(filter, defaultValue);
+  }
+
   @Value(value = "#{recordMapper}")
   protected RecordMapper recordMapper;
 

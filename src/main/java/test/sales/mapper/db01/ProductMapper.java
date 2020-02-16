@@ -14,11 +14,11 @@ import test.sales.bean.Product;
 
 @Component("productMapper")
 public interface ProductMapper {
-  @Select("SELECT COUNT(*)>0 FROM F4101View WHERE IMID=#{imid}")
+  @Select("SELECT COUNT(*)>0 FROM F4101VIEW WHERE IMID=#{imid}")
   boolean exists(@Param("imid") Integer imid);
 
   @Select(
-      "<script><choose><when test='mask!=null'><if test='mask.imid or mask.imname or mask.imprice or mask.imamount'><trim prefix='SELECT' suffixOverrides=','><if test='mask.imid'>IMID, </if><if test='mask.imname'>IMNAME, </if><if test='mask.imprice'>IMPRICE, </if><if test='mask.imamount'>IMAMOUNT, </if></trim>FROM F4101View WHERE IMID=#{imid}</if></when><otherwise>SELECTIMID,IMNAME,IMPRICE,IMAMOUNT FROM F4101View WHERE IMID=#{imid}</otherwise></choose></script>")
+      "<script><choose><when test='mask!=null'><if test='mask.imid or mask.imname or mask.imprice or mask.imamount'><trim prefix='SELECT' suffixOverrides=','><if test='mask.imid'>IMID, </if><if test='mask.imname'>IMNAME, </if><if test='mask.imprice'>IMPRICE, </if><if test='mask.imamount'>IMAMOUNT, </if></trim>FROM F4101VIEW WHERE IMID=#{imid}</if></when><otherwise>SELECTIMID,IMNAME,IMPRICE,IMAMOUNT FROM F4101VIEW WHERE IMID=#{imid}</otherwise></choose></script>")
   Product get(@Param("imid") Integer imid, @Param("mask") ProductMask mask);
 
   @org.apache.ibatis.annotations.SelectKey(
@@ -44,7 +44,7 @@ public interface ProductMapper {
   void deleteWhere(@Param("filter") FilterExpr filter);
 
   @Select(
-      "<script>SELECT A.* FROM (SELECT B.*, ROWNUM B_ROWNUM FROM (<choose><when test='mask!=null'><trim prefix='SELECT' suffixOverrides=','><if test='mask.imid'>imid,</if><if test='mask.imname'>imname,</if><if test='mask.imprice'>imprice,</if><if test='mask.imamount'>imamount,</if></trim></when><otherwise>SELECT imid, imname, imprice, imamount</otherwise></choose> FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if><if test='order!=null'> ORDER BY ${order.toString()}</if>) B WHERE ROWNUM &lt;=#{start}+#{count}) A WHERE B_ROWNUM &gt;=#{start}+1</script>")
+      "<script>SELECT A.* FROM (SELECT B.*, ROWNUM B_ROWNUM FROM (<choose><when test='mask!=null'><trim prefix='SELECT' suffixOverrides=','><if test='mask.imid'>imid,</if><if test='mask.imname'>imname,</if><if test='mask.imprice'>imprice,</if><if test='mask.imamount'>imamount,</if></trim></when><otherwise>SELECT imid, imname, imprice, imamount</otherwise></choose> FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if><if test='order!=null'> ORDER BY ${order.toString()}</if>) B WHERE ROWNUM &lt;=#{start}+#{count}) A WHERE B_ROWNUM &gt;=#{start}+1</script>")
   List<Product> query(
       @Param("filter") FilterExpr filter,
       @Param("order") OrderByListExpr order,
@@ -53,32 +53,32 @@ public interface ProductMapper {
       @Param("mask") ProductMask mask);
 
   @Select(
-      "<script>SELECT COUNT(*) FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
+      "<script>SELECT COUNT(*) FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
   long count(@Param("filter") FilterExpr filter);
 
   @Select(
-      "<script>SELECT DECODE(MIN(IMID),NULL,${defaultValue}) FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
+      "<script>SELECT DECODE(MIN(IMID),NULL,${defaultValue}) FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
   Integer minImid(@Param("filter") FilterExpr filter, @Param("defaultValue") Integer defaultValue);
 
   @Select(
-      "<script>SELECT DECODE(MAX(IMID),NULL,${defaultValue}) FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
+      "<script>SELECT DECODE(MAX(IMID),NULL,${defaultValue}) FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
   Integer maxImid(@Param("filter") FilterExpr filter, @Param("defaultValue") Integer defaultValue);
 
   @Select(
-      "<script>SELECT DECODE(MIN(IMPRICE),NULL,${defaultValue}) FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
+      "<script>SELECT DECODE(MIN(IMPRICE),NULL,${defaultValue}) FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
   Double minImprice(@Param("filter") FilterExpr filter, @Param("defaultValue") Double defaultValue);
 
   @Select(
-      "<script>SELECT DECODE(MAX(IMPRICE),NULL,${defaultValue}) FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
+      "<script>SELECT DECODE(MAX(IMPRICE),NULL,${defaultValue}) FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
   Double maxImprice(@Param("filter") FilterExpr filter, @Param("defaultValue") Double defaultValue);
 
   @Select(
-      "<script>SELECT DECODE(MIN(IMAMOUNT),NULL,${defaultValue}) FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
+      "<script>SELECT DECODE(MIN(IMAMOUNT),NULL,${defaultValue}) FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
   Double minImamount(
       @Param("filter") FilterExpr filter, @Param("defaultValue") Double defaultValue);
 
   @Select(
-      "<script>SELECT DECODE(MAX(IMAMOUNT),NULL,${defaultValue}) FROM F4101View<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
+      "<script>SELECT DECODE(MAX(IMAMOUNT),NULL,${defaultValue}) FROM F4101VIEW<if test='filter!=null'> WHERE ${filter.toStringOracle()}</if></script>")
   Double maxImamount(
       @Param("filter") FilterExpr filter, @Param("defaultValue") Double defaultValue);
 }

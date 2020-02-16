@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration status="error">
 	<appenders>
@@ -15,7 +16,7 @@
 			<appender-ref ref="RollingFile"/>
 			<appender-ref ref="Console"/>
 		</root>
-		<logger name="test.sales.mapper.db01" level="TRACE" additivity="false">
+		<logger name="$project.envJtee.packageMapper.db01" level="TRACE" additivity="false">
 			<appender-ref ref="RollingFile"/>
 			<appender-ref ref="Console"/>
 		</logger>

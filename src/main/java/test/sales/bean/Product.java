@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Update;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
   public static final String TABLE = "F4101";
-  public static final String VIEW = "F4101View";
+  public static final String VIEW = "F4101VIEW";
   public static final String NAME = "PRODUCT";
 
   //region imid Product ID

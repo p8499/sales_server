@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,10 +17,11 @@ import test.sales.mask.RecordMask;
 import test.sales.service.RecordService;
 
 public abstract class RecordControllerBase {
-  protected static final String path = "api/Record/";
-  protected static final String attachmentPath = "api/Record_attachment/";
-  protected static final String pathKey = "{reid}";
+  protected static final String path = "api/record";
+  protected static final String attachmentPath = "api/record_attachment";
+  protected static final String pathKey = "/{reid}";
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.GET,
@@ -37,7 +37,7 @@ public abstract class RecordControllerBase {
     RecordMask maskObj =
         mask == null || mask.equals("")
             ? new RecordMask().all(true)
-            : jackson.readValue(mask, RecordMask.class);
+            : new RecordMask(Long.valueOf(mask));
     Record bean = onGet(session, request, response, reid, maskObj);
     return jackson.writeValueAsString(bean);
   }
@@ -50,6 +50,7 @@ public abstract class RecordControllerBase {
       RecordMask mask)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(
     value = path,
     method = RequestMethod.POST,
@@ -69,6 +70,7 @@ public abstract class RecordControllerBase {
       HttpSession session, HttpServletRequest request, HttpServletResponse response, Record bean)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.PUT,
@@ -85,7 +87,7 @@ public abstract class RecordControllerBase {
     RecordMask maskObj =
         mask == null || mask.equals("")
             ? new RecordMask().all(true)
-            : jackson.readValue(mask, RecordMask.class);
+            : new RecordMask(Long.valueOf(mask));
     onUpdate(session, request, response, reid, bean, maskObj);
     return jackson.writeValueAsString(bean);
   }
@@ -99,6 +101,7 @@ public abstract class RecordControllerBase {
       RecordMask mask)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.DELETE,
@@ -117,20 +120,23 @@ public abstract class RecordControllerBase {
       HttpSession session, HttpServletRequest request, HttpServletResponse response, Integer reid)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080", exposedHeaders = "Content-Range")
   @RequestMapping(
-    value = path,
-    method = RequestMethod.GET,
+    value = path + "_list",
+    method = {RequestMethod.GET, RequestMethod.POST},
     produces = "application/json;charset=UTF-8"
   )
   public String query(
       HttpSession session,
       HttpServletRequest request,
       HttpServletResponse response,
-      @RequestParam(required = false) String filter,
+      @RequestParam(required = false, name = "filter") String paramFilter,
+      @RequestBody(required = false) String bodyFilter,
       @RequestParam(required = false) String orderBy,
       @RequestHeader(required = false, name = "Range", defaultValue = "items=0-9") String range,
       @RequestParam(required = false) String mask)
       throws Exception {
+    String filter = paramFilter == null || paramFilter.equals("") ? bodyFilter : paramFilter;
     FilterExpr filterObj =
         filter == null || filter.equals("") ? null : jackson.readValue(filter, FilterExpr.class);
     OrderByListExpr orderByListObj =
@@ -139,7 +145,7 @@ public abstract class RecordControllerBase {
     RecordMask maskObj =
         mask == null || mask.equals("")
             ? new RecordMask().all(true)
-            : jackson.readValue(mask, RecordMask.class);
+            : new RecordMask(Long.valueOf(mask));
     Long total = onCount(session, request, response, filterObj);
     if (total == null) return null;
     long start = rangeObj.getStart(total);
@@ -169,6 +175,7 @@ public abstract class RecordControllerBase {
       RecordMask mask)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080", exposedHeaders = "Content-Disposition")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.GET,
@@ -199,6 +206,7 @@ public abstract class RecordControllerBase {
       String name)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.PUT,
@@ -226,6 +234,7 @@ public abstract class RecordControllerBase {
       String name)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.DELETE,
@@ -249,6 +258,7 @@ public abstract class RecordControllerBase {
       String name)
       throws Exception;
 
+  @CrossOrigin(origins = "http://localhost:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.GET,
