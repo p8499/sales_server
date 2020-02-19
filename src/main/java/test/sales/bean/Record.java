@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Update;
 public class Record {
   public static final String TABLE = "F4211";
   public static final String VIEW = "F4211VIEW";
-  public static final String NAME = "RECORD";
+  public static final String NAME = "RECD";
 
   //region reid Record ID
   public static final String FIELD_REID = "REID";

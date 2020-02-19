@@ -17,11 +17,12 @@ import test.sales.mask.RecordMask;
 import test.sales.service.RecordService;
 
 public abstract class RecordControllerBase {
-  protected static final String path = "api/record";
-  protected static final String attachmentPath = "api/record_attachment";
+  protected static final String path = "api/recd";
+  protected static final String listPath = "api/recd_list";
+  protected static final String attachmentPath = "api/recd_attachment";
   protected static final String pathKey = "/{reid}";
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.GET,
@@ -50,7 +51,7 @@ public abstract class RecordControllerBase {
       RecordMask mask)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path,
     method = RequestMethod.POST,
@@ -70,7 +71,7 @@ public abstract class RecordControllerBase {
       HttpSession session, HttpServletRequest request, HttpServletResponse response, Record bean)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.PUT,
@@ -101,7 +102,7 @@ public abstract class RecordControllerBase {
       RecordMask mask)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.DELETE,
@@ -120,9 +121,9 @@ public abstract class RecordControllerBase {
       HttpSession session, HttpServletRequest request, HttpServletResponse response, Integer reid)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080", exposedHeaders = "Content-Range")
+  @CrossOrigin(origins = "http://192.168.100.43:8080", exposedHeaders = "Content-Range")
   @RequestMapping(
-    value = path + "_list",
+    value = listPath,
     method = {RequestMethod.GET, RequestMethod.POST},
     produces = "application/json;charset=UTF-8"
   )
@@ -175,7 +176,7 @@ public abstract class RecordControllerBase {
       RecordMask mask)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080", exposedHeaders = "Content-Disposition")
+  @CrossOrigin(origins = "http://192.168.100.43:8080", exposedHeaders = "Content-Disposition")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.GET,
@@ -206,7 +207,7 @@ public abstract class RecordControllerBase {
       String name)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.PUT,
@@ -234,7 +235,7 @@ public abstract class RecordControllerBase {
       String name)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.DELETE,
@@ -258,7 +259,7 @@ public abstract class RecordControllerBase {
       String name)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.GET,

@@ -17,11 +17,12 @@ import test.sales.mask.EmployeeMask;
 import test.sales.service.EmployeeService;
 
 public abstract class EmployeeControllerBase {
-  protected static final String path = "api/employee";
-  protected static final String attachmentPath = "api/employee_attachment";
+  protected static final String path = "api/empl";
+  protected static final String listPath = "api/empl_list";
+  protected static final String attachmentPath = "api/empl_attachment";
   protected static final String pathKey = "/{emid}";
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.GET,
@@ -50,7 +51,7 @@ public abstract class EmployeeControllerBase {
       EmployeeMask mask)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.POST,
@@ -75,7 +76,7 @@ public abstract class EmployeeControllerBase {
       Employee bean)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.PUT,
@@ -106,7 +107,7 @@ public abstract class EmployeeControllerBase {
       EmployeeMask mask)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = path + pathKey,
     method = RequestMethod.DELETE,
@@ -125,9 +126,9 @@ public abstract class EmployeeControllerBase {
       HttpSession session, HttpServletRequest request, HttpServletResponse response, Integer emid)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080", exposedHeaders = "Content-Range")
+  @CrossOrigin(origins = "http://192.168.100.43:8080", exposedHeaders = "Content-Range")
   @RequestMapping(
-    value = path + "_list",
+    value = listPath,
     method = {RequestMethod.GET, RequestMethod.POST},
     produces = "application/json;charset=UTF-8"
   )
@@ -180,7 +181,7 @@ public abstract class EmployeeControllerBase {
       EmployeeMask mask)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080", exposedHeaders = "Content-Disposition")
+  @CrossOrigin(origins = "http://192.168.100.43:8080", exposedHeaders = "Content-Disposition")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.GET,
@@ -211,7 +212,7 @@ public abstract class EmployeeControllerBase {
       String name)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.PUT,
@@ -239,7 +240,7 @@ public abstract class EmployeeControllerBase {
       String name)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.DELETE,
@@ -263,7 +264,7 @@ public abstract class EmployeeControllerBase {
       String name)
       throws Exception;
 
-  @CrossOrigin(origins = "http://localhost:8080")
+  @CrossOrigin(origins = "http://192.168.100.43:8080")
   @RequestMapping(
     value = attachmentPath + pathKey,
     method = RequestMethod.GET,
